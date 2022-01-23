@@ -1,2 +1,3 @@
 truffle init
 truffle migrate
+truffle compile
