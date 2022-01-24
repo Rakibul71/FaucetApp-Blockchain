@@ -1,3 +1,17 @@
 truffle init
 truffle migrate
 truffle compile
+truffle console
+const instance = await Faucet.deployed()
+instance 
+const counter = await instance.counter()
+counter.toString()
+
+
+
+truffle console
+
+const instance = new web3.eth.Contract(Faucet.abi,"0x09422131b528f56bc2fB20B7e882E191F32167B8")
+const funds = await instance.methods.funds().call()
+funds
+
