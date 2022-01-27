@@ -15,3 +15,9 @@ const instance = new web3.eth.Contract(Faucet.abi,"0x09422131b528f56bc2fB20B7e88
 const funds = await instance.methods.funds().call()
 funds
 
+
+truffle migrate --reset
+truffle console
+accounts
+
+web3.eth.sendTransaction({from: accounts[0],to:"0xc212feDb62BeEe56C1F72D17c65CAAaEbb487B9C",value:"10000000000000000000"})
