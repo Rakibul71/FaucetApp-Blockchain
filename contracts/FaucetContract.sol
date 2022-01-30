@@ -2,8 +2,9 @@
 pragma solidity >=0.4.22 <0.9.0;
 import "./Owned.sol";
 import "./Logger.sol";
+import "./IFaucet.sol";
 
-contract Faucet is Owned, Logger {
+contract Faucet is Owned, Logger, IFaucet {
     uint256 public numberOfFounders;
 
     mapping(address => bool) private funders;
@@ -19,9 +20,11 @@ contract Faucet is Owned, Logger {
 
     receive() external payable {}
 
-    function emitLog() public pure override returns (bytes32) {}
+    function emitLog() public pure override returns (bytes32) {
+        return "hello world";
+    }
 
-    function addFunds() external payable {
+    function addFunds() external payable override {
         address funder = msg.sender;
 
         if (!funders[funder]) {
@@ -35,16 +38,13 @@ contract Faucet is Owned, Logger {
 
     function test2() external onlyOwner {}
 
-    function withdraw(uint256 withdrawAmount) external {
+    function withdraw(uint256 withdrawAmount)
+        external
+        override
+        limitWithdraw(withdrawAmount)
+    {
         payable(msg.sender).transfer(withdrawAmount);
     }
-
-    // function withdraw(uint256 withdrawAmount)
-    //     external
-    //     limitWithdraw(withdrawAmount)
-    // {
-    //     payable(msg.sender).transfer(withdrawAmount);
-    // }
 
     function getAllFunders() external view returns (address[] memory) {
         address[] memory _funders = new address[](numberOfFounders);
