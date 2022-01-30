@@ -19,6 +19,14 @@ contract Faucet {
         }
     }
 
+    function withdraw(uint256 withdrawAmount) external {
+        require(
+            withdrawAmount <= 100000000000000000,
+            "Can not withdraw more than 0.1 eather "
+        );
+        payable(msg.sender).transfer(withdrawAmount);
+    }
+
     function getAllFunders() external view returns (address[] memory) {
         address[] memory _funders = new address[](numberOfFounders);
 
@@ -34,7 +42,9 @@ contract Faucet {
 }
 
 // const instance = await Faucet.deployed()
-// instance.addFunds({from:accounts[0],value:"2000000000000000"})
-// instance.addFunds({from:accounts[1],value:"2000000000000000"})
+// instance.addFunds({from:accounts[0],value:"2000000000000000000"})
+// instance.addFunds({from:accounts[1],value:"2000000000000000000"})
 //instance.getFunderAtIndex(0)
 //instance.getAllFunders()
+
+// instance.withdraw("5000000000000000000", {from:accounts[1]})
