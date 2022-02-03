@@ -5,15 +5,15 @@ import "./Logger.sol";
 import "./IFaucet.sol";
 
 contract Faucet is Owned, Logger, IFaucet {
-    uint256 public numberOfFounders;
+    uint256 public numOfFunders;
 
     mapping(address => bool) private funders;
-    mapping(uint256 => address) private lutfunders;
+    mapping(uint256 => address) private lutFunders;
 
     modifier limitWithdraw(uint256 withdrawAmount) {
         require(
             withdrawAmount <= 100000000000000000,
-            "Can not withdraw more than 0.1 eather "
+            "Cannot withdraw more than 0.1 ether"
         );
         _;
     }
@@ -21,7 +21,7 @@ contract Faucet is Owned, Logger, IFaucet {
     receive() external payable {}
 
     function emitLog() public pure override returns (bytes32) {
-        return "hello world";
+        return "Hello World";
     }
 
     function addFunds() external payable override {
@@ -29,15 +29,19 @@ contract Faucet is Owned, Logger, IFaucet {
         test3();
 
         if (!funders[funder]) {
-            uint256 index = numberOfFounders++;
+            uint256 index = numOfFunders++;
             funders[funder] = true;
-            lutfunders[index] = funder;
+            lutFunders[index] = funder;
         }
     }
 
-    function test1() external onlyOwner {}
+    function test1() external onlyOwner {
+        // some managing stuff that only admin should have access to
+    }
 
-    function test2() external onlyOwner {}
+    function test2() external onlyOwner {
+        // some managing stuff that only admin should have access to
+    }
 
     function withdraw(uint256 withdrawAmount)
         external
@@ -48,16 +52,17 @@ contract Faucet is Owned, Logger, IFaucet {
     }
 
     function getAllFunders() external view returns (address[] memory) {
-        address[] memory _funders = new address[](numberOfFounders);
+        address[] memory _funders = new address[](numOfFunders);
 
-        for (uint256 i = 0; i < numberOfFounders; i++) {
-            _funders[i] = lutfunders[i];
+        for (uint256 i = 0; i < numOfFunders; i++) {
+            _funders[i] = lutFunders[i];
         }
+
         return _funders;
     }
 
     function getFunderAtIndex(uint8 index) external view returns (address) {
-        return lutfunders[index];
+        return lutFunders[index];
     }
 }
 
