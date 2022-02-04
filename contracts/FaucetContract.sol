@@ -65,11 +65,3 @@ contract Faucet is Owned, Logger, IFaucet {
         return lutFunders[index];
     }
 }
-
-// const instance = await Faucet.deployed()
-// instance.addFunds({from:accounts[0],value:"2000000000000000000"})
-// instance.addFunds({from:accounts[1],value:"2000000000000000000"})
-//instance.getFunderAtIndex(0)
-//instance.getAllFunders()
-
-// instance.withdraw("5000000000000000000", {from:accounts[1]})
